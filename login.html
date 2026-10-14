@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Connexion | CleanBenin{% endblock %}
+{% block content %}
+<section class="login-card">
+  <h1>CleanBenin 🔐</h1>
+  <h2>Espace administrateur</h2>
+  <p>Connecte-toi pour consulter les réservations privées.</p>
+  {% if error %}<div class="notice error">{{ error }}</div>{% endif %}
+  <form method="post" action="{{ url_for('admin_login') }}">
+    <label>Nom d'utilisateur<input name="username" required autocomplete="username"></label>
+    <label>Mot de passe<input type="password" name="password" required autocomplete="current-password"></label>
+    <button class="button" type="submit">Se connecter</button>
+  </form>
+  <a href="{{ url_for('home') }}">Retour au site</a>
+</section>
+{% endblock %}

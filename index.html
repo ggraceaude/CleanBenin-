@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}CleanBenin — Réservation de nettoyage{% endblock %}
+{% block content %}
+<section class="hero">
+  <p class="eyebrow">COTONOU · PORTO-NOVO · CALAVI · PAHOU</p>
+  <h1>Une maison propre, l’esprit tranquille.</h1>
+  <p>Réserve ton service de nettoyage simplement. Envoie ta demande en ligne, sans numéro public affiché sur le site.</p>
+  <a class="button" href="#reservation">Réserver un nettoyage</a>
+</section>
+<section>
+  <h2>Nos tarifs</h2>
+  <div class="prices">
+  {% for service, price in services %}
+    <article class="price"><h3>{{ service }}</h3><p>{{ "{:,}".format(price).replace(",", " ") }} FCFA</p></article>
+  {% endfor %}
+  </div>
+</section>
+<section id="reservation" class="form-card">
+  <h2>Faire une réservation</h2>
+  <p>Remplis les champs ci-dessous. Tes informations seront enregistrées dans l’espace de gestion privé.</p>
+  <form action="{{ url_for('create_booking') }}" method="post">
+    <label>Nom complet *<input name="name" required maxlength="100" autocomplete="name"></label>
+    <label>Ton numéro de téléphone *<input name="phone" required maxlength="40" type="tel" autocomplete="tel"></label>
+    <label>Ville / zone *
+      <select name="city" required><option value="">Choisir une zone</option>{% for city in cities %}<option>{{ city }}</option>{% endfor %}</select>
+    </label>
+    <label>Service souhaité *
+      <select name="service" required><option value="">Choisir un service</option>{% for service, price in services %}<option>{{ service }} — {{ "{:,}".format(price).replace(",", " ") }} FCFA</option>{% endfor %}</select>
+    </label>
+    <label>Date souhaitée *<input type="date" name="date" required></label>
+    <label>Précisions (facultatif)<textarea name="details" rows="3" maxlength="1000" placeholder="Quartier, détails utiles…"></textarea></label>
+    <button class="button" type="submit">Envoyer ma demande</button>
+  </form>
+</section>
+{% endblock %}
